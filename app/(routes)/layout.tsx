@@ -9,7 +9,7 @@ export default async function RoutesLayout({
     <section className="min-h-screen">
       {" "}
       <Navbar />
-      <div className="pt-28">{children}</div>
+      <div className="pt-24">{children}</div>
     </section>
   );
 }

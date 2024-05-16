@@ -8,7 +8,7 @@ import Link from "next/link";
 
 export default function HeroSection() {
   return (
-    <div className="flex justify-center items-center flex-col pb-28 gap-4 px-0">
+    <div className="flex justify-center items-center flex-col gap-4 px-0 pb-28">
       <Container className="space-y-4 flex flex-col justify-center items-center">
         {" "}
         <h1 className="max-w-5xl text-center  text-2xl font-bold leading-tight  sm:text-5xl sm:leading-tight md:text-6xl md:leading-tight">
@@ -21,7 +21,7 @@ export default function HeroSection() {
           around the globe, all driven by a passion for collaboration and making
           a difference.
         </p>
-        <Button asChild>
+        <Button asChild size="lg">
           <Link className="flex items-center gap-1.5" href="/sign-up">
             Get started
           </Link>

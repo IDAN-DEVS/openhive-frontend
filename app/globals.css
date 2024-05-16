@@ -4,6 +4,10 @@
 
 /* Primary Color #00BD8C */
 
+.text-grey {
+  color: var(--Grey-Accessible-Text-1, #ebecf0);
+}
+
 @layer base {
   :root {
     --background: 0 0% 100%;

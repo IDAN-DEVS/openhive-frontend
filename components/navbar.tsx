@@ -35,7 +35,7 @@ export default function Navbar() {
   return (
     <header className="fixed top-0 w-full z-50 bg-[#111111]">
       <nav>
-        <Container className="flex justify-between items-center  py-4">
+        <div className="flex justify-between items-center  py-4 px-6 lg:px-20">
           <div className="flex items-center gap-4">
             <Link href="/" className="flex items-center select-none gap-1">
               <Image
@@ -137,7 +137,7 @@ export default function Navbar() {
               </SheetContent>
             </Sheet>
           </div>
-        </Container>
+        </div>
       </nav>
     </header>
   );

@@ -10,5 +10,9 @@ export default function Container({
   children,
   className,
 }: Children): ReactElement {
-  return <div className={cn("px-6 lg:px-20 py-2", className)}>{children}</div>;
+  return (
+    <div className={cn("px-6 lg:px-24 space-y-8 py-10 lg:py-20", className)}>
+      {children}
+    </div>
+  );
 }
