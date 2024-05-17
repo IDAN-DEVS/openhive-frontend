@@ -8,7 +8,7 @@ interface Props {
 
 export default function Heading({ title, description, className }: Props) {
   return (
-    <div>
+    <div className="space-y-2 lg:space-y-4">
       <h2
         className={cn(
           "lg:text-4xl md:text-3xl text-2xl font-bold tracking-tight",

@@ -51,7 +51,11 @@ export default function Navbar() {
             </Link>
             <div className="hidden lg:flex gap-x-2 items-center">
               {navigation.map((nav) => (
-                <Button variant="ghost" key={nav.name} asChild>
+                <Button
+                  variant={nav.active ? "secondary" : "ghost"}
+                  key={nav.name}
+                  asChild
+                >
                   <Link href={nav.href}>{nav.name}</Link>
                 </Button>
               ))}
@@ -107,7 +111,7 @@ export default function Navbar() {
                   <div className="flex flex-col gap-3">
                     {navigation.map((nav) => (
                       <Button
-                        variant="ghost"
+                        variant={nav.active ? "secondary" : "ghost"}
                         className=" justify-start w-full"
                         key={nav.name}
                         asChild
