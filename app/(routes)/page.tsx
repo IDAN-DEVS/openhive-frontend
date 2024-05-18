@@ -3,7 +3,7 @@ import FeaturedProjects from "@/components/featured-projects";
 import Footer from "@/components/footer";
 import HeroSection from "@/components/hero-section";
 
-//test
+//test another one
 export default async function Home() {
   return (
     <div>
