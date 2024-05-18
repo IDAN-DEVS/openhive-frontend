@@ -1,4 +1,4 @@
-import { cn } from "@/lib/utils";
+import { cn } from "lib/utils";
 
 interface Props {
   title: string;
@@ -12,7 +12,7 @@ export default function Heading({ title, description, className }: Props) {
       <h2
         className={cn(
           "lg:text-4xl md:text-3xl text-2xl font-bold tracking-tight",
-          className
+          className,
         )}
       >
         {title}
