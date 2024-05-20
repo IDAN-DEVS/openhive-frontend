@@ -18,7 +18,12 @@ export default function Heading({ title, description, className }: Props) {
         {title}
       </h2>
       {description && (
-        <p className={cn("text-sm text-muted-foreground", className)}>
+        <p
+          className={cn(
+            "text-sm lg:text-base text-muted-foreground lg:max-w-md",
+            className,
+          )}
+        >
           {description}
         </p>
       )}

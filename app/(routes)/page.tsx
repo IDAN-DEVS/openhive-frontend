@@ -1,4 +1,5 @@
 import AboutUs from "@/components/about-us";
+import Creators from "@/components/creators";
 import FeaturedProjects from "@/components/featured-projects";
 import Footer from "@/components/footer";
 import HeroSection from "@/components/hero-section";
@@ -10,6 +11,7 @@ export default async function Home() {
       <HeroSection />
       <AboutUs />
       <FeaturedProjects />
+      <Creators />
       <Footer />
     </div>
   );

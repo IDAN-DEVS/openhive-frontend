@@ -14,6 +14,7 @@ import {
 import { Input } from "@/components/ui/input";
 import ProductCard from "@/components/ui/product-card";
 import {
+  AdjustmentsHorizontalIcon,
   CreditCardIcon,
   MagnifyingGlassIcon,
   UserIcon,
@@ -42,7 +43,10 @@ export default function ExplorePage() {
               placeholder="Search projects,creators"
             />
           </label>
-          <div className="flex items-center gap-2 ">
+          <Button variant="outline" size="icon" className="lg:hidden">
+            <AdjustmentsHorizontalIcon className="w-5 h-5" />
+          </Button>
+          <div className="lg:flex items-center gap-2 hidden">
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button variant="outline" className="text-muted-foreground">

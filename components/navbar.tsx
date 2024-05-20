@@ -27,7 +27,7 @@ export default function Navbar() {
     },
     {
       name: "About us",
-      href: `/about`,
+      href: `/about-us`,
 
       active: pathname === "/about-us",
     },

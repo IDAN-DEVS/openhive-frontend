@@ -11,12 +11,12 @@ export default function HeroSection() {
     <div className="flex justify-center items-center flex-col gap-4 px-0 pb-28">
       <Container className="space-y-4 flex flex-col justify-center items-center">
         {" "}
-        <h1 className="max-w-5xl text-center  text-2xl font-bold leading-tight  sm:text-5xl sm:leading-tight md:text-6xl md:leading-tight">
+        <h1 className="max-w-5xl text-center  text-3xl font-bold leading-tight  sm:text-5xl md:text-7xl">
           Welcome to <span className="text-primary">OpenHive</span>
           <br />
           where talent meets opportunity!
         </h1>
-        <p className="max-w-3xl text-muted-foreground text-center  text-lg leading-relaxed  md:leading-relaxed">
+        <p className="max-w-3xl text-muted-foreground text-center  text-lg leading-relaxed">
           Join a vibrant community of creators, developers, and innovators from
           around the globe, all driven by a passion for collaboration and making
           a difference.

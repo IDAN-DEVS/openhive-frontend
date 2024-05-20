@@ -16,8 +16,8 @@ import { Button } from "./button";
 export default function ProductCard() {
   return (
     <Card className="bg-[#111] border-none w-full">
-      <CardHeader className=" justify-between flex flex-row items-center">
-        <div className="flex items-center gap-2 justify-center">
+      <CardHeader className=" justify-between flex flex-row items-">
+        <div className="flex lg:items-center items-start lg:flex-row flex-col gap-2 justify-center">
           <Avatar className=" border-2 border-white">
             <AvatarImage src="/images/product-avatar.png" />
             <AvatarFallback className="bg-muted">
@@ -36,7 +36,7 @@ export default function ProductCard() {
         <CardTitle className="text-primary text-base lg:text-lg">
           Atom Aurelia Snippets
         </CardTitle>
-        <CardDescription className="max-w-[20rem] text-base leading-6 text-gray line-clamp-3 ">
+        <CardDescription className="max-w-[20rem] text-sm lg:tex-base leading-6 text-gray line-clamp-3 ">
           A plugin for Atom Editor to autocomplete aurelia snippets when working
           with Aurelia.
         </CardDescription>
