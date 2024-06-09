@@ -30,9 +30,9 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 
-export default function ProjectsPage() {
+export default function ProjectsPage({ params }: { params: { slug: string } }) {
   return (
     <Container className="lg:space-y-20">
       <div className="flex items-start justify-start gap-4">

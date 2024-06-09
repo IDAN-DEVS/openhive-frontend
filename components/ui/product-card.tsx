@@ -12,6 +12,14 @@ import { Avatar, AvatarFallback, AvatarImage } from "./avatar";
 import { UserIcon } from "@heroicons/react/16/solid";
 import { EllipsisVerticalIcon } from "@heroicons/react/24/outline";
 import { Button } from "./button";
+import {
+  DropdownMenuContent,
+  DropdownMenu,
+  DropdownMenuTrigger,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuLabel,
+} from "./dropdown-menu";
 
 export default function ProductCard() {
   return (
@@ -28,9 +36,19 @@ export default function ProductCard() {
             Theresa Webb
           </h2>
         </div>
-        <Button variant="outline" size="icon" className="h-7 w-7">
-          <EllipsisVerticalIcon className="h-5 w-5" />
-        </Button>
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button variant="outline" size="icon" className="h-7 w-7">
+              <EllipsisVerticalIcon className="h-5 w-5" />
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent className="w-56" align="end">
+            <DropdownMenuLabel>Actions</DropdownMenuLabel>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem>View</DropdownMenuItem>
+            <DropdownMenuItem>Bookmark</DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
       </CardHeader>
       <CardContent className="gap-4 flex flex-col">
         <CardTitle className="text-primary text-base lg:text-lg">

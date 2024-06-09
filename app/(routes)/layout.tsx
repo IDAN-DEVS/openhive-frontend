@@ -1,3 +1,4 @@
+import Footer from "@/components/footer";
 import Navbar from "@/components/navbar";
 
 export default async function RoutesLayout({
@@ -10,6 +11,7 @@ export default async function RoutesLayout({
       {" "}
       <Navbar />
       <div className="pt-24">{children}</div>
+      <Footer />
     </section>
   );
 }
