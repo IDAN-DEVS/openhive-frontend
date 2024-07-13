@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useTransition } from "react";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
@@ -14,23 +14,22 @@ import {
   FormField,
   FormItem,
   FormMessage,
-  FormDescription,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { RegisterSchema } from "@/schemas/auth";
 import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/outline";
 import FormWrapper from "./form-wrapper";
-// import { register } from "@/actions/auth";
 import { FormError } from "./form-error";
 import { Loader } from "lucide-react";
-import GoogleButton from "./google-button";
+import { authAxios } from "@/services/auth/service";
+import { FormSuccess } from "./form-success";
+import { useRouter } from "next/navigation";
 
 export default function RegisterForm() {
-  const [isPending, startTransition] = useTransition();
-
+  const [isPending, setIsPending] = useState(false);
   const [error, setError] = useState<string | undefined>("");
-
   const [showPassword, setShowPassword] = useState(false);
+  const router = useRouter();
 
   const form = useForm<z.infer<typeof RegisterSchema>>({
     resolver: zodResolver(RegisterSchema),
@@ -40,25 +39,27 @@ export default function RegisterForm() {
     },
   });
 
-  const onSubmit = (values: z.infer<typeof RegisterSchema>) => {
-    // startTransition(() => {
-    //   register(values)
-    //     .then((data) => {
-    //       if (data?.error) {
-    //         form.reset();
-    //         setError(data.error);
-    //       }
-    //     })
-    //     .catch(() => setError("Oops! Something went wrong!"));
-    // });
+  const onSubmit = async (values: z.infer<typeof RegisterSchema>) => {
+    try {
+      setIsPending(true);
+      const res = await authAxios.post("/register", values);
+      if (res.status === 201 && res.data.success) {
+        router.push(`/verify?email=${res.data.data.email}`);
+      } else {
+        setError(res.data.message);
+      }
+    } catch (err) {
+      // @ts-ignore
+      setError("Something went wrong");
+      console.log(err);
+    } finally {
+      setIsPending(false);
+    }
   };
 
   return (
     <FormWrapper title="Create an account">
       <FormError message={error} />
-      <div className="mt-2">
-        <GoogleButton loading={isPending} />
-      </div>
 
       <div className="mt-6 space-y-2">
         <Form {...form}>
@@ -119,8 +120,11 @@ export default function RegisterForm() {
                   className="w-full border py-3 px-4 text-base shadow-sm border-black"
                   disabled={isPending}
                 >
-                  {isPending && <Loader className="h-5 w-5 animate-spin" />}
-                  <span>Register</span>
+                  {isPending ? (
+                    <Loader className="h-5 w-5 animate-spin" />
+                  ) : (
+                    <span>Register</span>
+                  )}
                 </Button>
               </div>
             </div>

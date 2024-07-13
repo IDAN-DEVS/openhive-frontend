@@ -22,13 +22,17 @@ import FormWrapper from "./form-wrapper";
 import { FormError } from "./form-error";
 import { FormSuccess } from "./form-success";
 import { Loader } from "lucide-react";
+import { authAxios } from "@/services/auth/service";
+import { useRouter } from "next/navigation";
+import { toast } from "sonner";
 
 export default function ResetPasswordForm() {
-  const [isPending, startTransition] = useTransition();
+  const [isPending, setIsPending] = useState(false);
 
   const [error, setError] = useState<string | undefined>("");
 
   const [success, setSuccess] = useState<string | undefined>("");
+  const router = useRouter();
 
   const form = useForm<z.infer<typeof ResetPasswordSchema>>({
     resolver: zodResolver(ResetPasswordSchema),
@@ -37,23 +41,25 @@ export default function ResetPasswordForm() {
     },
   });
 
-  const onSubmit = (values: z.infer<typeof ResetPasswordSchema>) => {
-    // startTransition(() => {
-    //   reset(values)
-    //     .then((data) => {
-    //       if (data?.error) {
-    //         form.reset();
-    //         setSuccess("");
-    //         setError(data.error);
-    //       }
-    //       if (data?.success) {
-    //         form.reset();
-    //         setError("");
-    //         setSuccess(data.success);
-    //       }
-    //     })
-    //     .catch(() => setError("Oops! Something went wrong!"));
-    // });
+  const onSubmit = async (values: z.infer<typeof ResetPasswordSchema>) => {
+    try {
+      setIsPending(true);
+      const res = await authAxios.post("/forgot-password", values);
+      console.log(res);
+
+      if (res.status === 201 && res.data.success) {
+        toast.success(res.data.message);
+        router.push(`/new-password?email=${values.email}`);
+      } else {
+        setError(res.data.message);
+      }
+    } catch (err) {
+      // @ts-ignore
+      setError("Something went wrong");
+      console.log(err);
+    } finally {
+      setIsPending(false);
+    }
   };
 
   return (
@@ -64,7 +70,7 @@ export default function ResetPasswordForm() {
       >
         <div className="mt-6 space-y-2">
           <FormError message={error} />
-          <FormSuccess message={success} />
+
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
               <FormField
@@ -94,8 +100,11 @@ export default function ResetPasswordForm() {
                     className="w-full border py-3 px-4 text-base shadow-sm border-black"
                     disabled={isPending}
                   >
-                    {isPending && <Loader className="h-5 w-5 animate-spin" />}
-                    <span>Send reset link</span>
+                    {isPending ? (
+                      <Loader className="h-5 w-5 animate-spin" />
+                    ) : (
+                      <span>Send reset</span>
+                    )}
                   </Button>
                 </div>
               </div>

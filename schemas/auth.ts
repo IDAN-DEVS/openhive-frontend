@@ -22,14 +22,17 @@ export const ResetPasswordSchema = z.object({
     message: "Email is required",
   }),
 });
-export const ResendSchema = z.object({
-  email: z.string().email({
-    message: "Email is required",
+export const VerifySchema = z.object({
+  code: z.string().min(6, {
+    message: "Your one-time password must be 6 characters.",
   }),
 });
 
 export const NewPasswordSchema = z
   .object({
+    code: z.string().min(6, {
+      message: "Your one-time password must be 6 characters.",
+    }),
     password: z
       .string()
       .min(6, { message: "Password must be more than six characters long!" }),

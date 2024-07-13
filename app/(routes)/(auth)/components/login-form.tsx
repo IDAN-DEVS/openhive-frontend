@@ -15,23 +15,22 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import Spinner from "@/components/ui/loader";
 import { LoginSchema } from "@/schemas/auth";
 import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/outline";
 
 import FormWrapper from "./form-wrapper";
-import { useSearchParams } from "next/navigation";
-// import { signIn } from "@/actions/auth";
+import { useRouter, useSearchParams } from "next/navigation";
 import { FormError } from "./form-error";
 import { Loader } from "lucide-react";
-import GoogleButton from "./google-button";
+import { authAxios } from "@/services/auth/service";
+import { CookieUser } from "@/data/user";
 
 export default function LoginForm() {
   const searchParams = useSearchParams();
   const calLbackUrl = searchParams.get("callbackUrl");
 
-  const [isPending, startTransition] = useTransition();
-
+  const [isPending, setIsPending] = useState(false);
+  const router = useRouter();
   const [error, setError] = useState<string | undefined>("");
 
   const [showPassword, setShowPassword] = useState(false);
@@ -44,26 +43,28 @@ export default function LoginForm() {
     },
   });
 
-  const onSubmit = (values: z.infer<typeof LoginSchema>) => {
-    // startTransition(() => {
-    //   signIn(values, calLbackUrl)
-    //     .then((data) => {
-    //       if (data?.error) {
-    //         form.reset();
-    //         setError(data.error);
-    //       }
-    //     })
-    //     .catch(() => setError("Oops! Something went wrong!"));
-    // });
+  const onSubmit = async (values: z.infer<typeof LoginSchema>) => {
+    try {
+      setIsPending(true);
+      const res = await authAxios.post("/login", values);
+      if (res.status === 201 && res.data.success) {
+        CookieUser(res.data.data);
+        router.push("/explore");
+      } else {
+        setError(res.data.message);
+      }
+    } catch (err) {
+      // @ts-ignore
+      setError("Something went wrong");
+      console.log(err);
+    } finally {
+      setIsPending(false);
+    }
   };
 
   return (
     <FormWrapper title=" Welcome Back 👋">
       <FormError message={error} />
-      <div className="mt-2">
-        <GoogleButton loading={isPending} />
-      </div>
-
       <div className="mt-6 space-y-2">
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
@@ -136,8 +137,11 @@ export default function LoginForm() {
                   className="w-full border py-3 px-4 text-base shadow-sm border-black"
                   disabled={isPending}
                 >
-                  {isPending && <Loader className="h-5 w-5 animate-spin" />}
-                  <span>Login</span>
+                  {isPending ? (
+                    <Loader className="h-5 w-5 animate-spin" />
+                  ) : (
+                    <span>Login</span>
+                  )}
                 </Button>
               </div>
             </div>
@@ -154,7 +158,7 @@ export default function LoginForm() {
                 : ""
             }
           >
-            <Link href="/register">Sign up for free</Link>
+            <Link href="/sign-up">Sign up for free</Link>
           </Button>
         </div>
       </div>
